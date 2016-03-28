@@ -1,10 +1,7 @@
 {
   "autoGenerateExmlsList": true,
   "exmls": [
-    {
-      "path": "resource/eui_skins/boardSkin.exml",
-      "content": "<?xml version='1.0' encoding='utf-8'?>\n<e:Skin class=\"boardSkin\" xmlns:e=\"http://ns.egret.com/eui\" xmlns:w=\"http://ns.egret.com/wing\" height=\"528\">\n\t<e:Image id=\"board\" source=\"board\" x=\"0\" y=\"0\"/>\n\t<e:Image id=\"bread\" source=\"bread\" x=\"160\" y=\"70\"/>\n\t<e:Image id=\"breadmask\" source=\"bread_mask\" x=\"184\" y=\"91\"/>\n</e:Skin>"
-    }
+    "resource/eui_skins/boardSkin.exml"
   ],
   "skins": {
     "eui.Button": "resource/eui_skins/ButtonSkin.exml",
