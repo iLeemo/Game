@@ -33,6 +33,16 @@
 			"name":"GameFont_fnt",
 			"type":"font",
 			"url":"assets/GameFont.fnt"
+		},
+		{
+			"name":"ProgressMask_png",
+			"type":"image",
+			"url":"assets/ProgressMask.png"
+		},
+		{
+			"name":"ProgressBars_png",
+			"type":"image",
+			"url":"assets/ProgressBars.png"
 		}
 	]
 }

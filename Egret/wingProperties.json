@@ -33,6 +33,16 @@
 					"isFolder":false,
 					"key":"people",
 					"name":"people"
+				},
+				{
+					"isFolder":false,
+					"key":"ProgressMask_png",
+					"name":"ProgressMask_png"
+				},
+				{
+					"isFolder":false,
+					"key":"ProgressBars_png",
+					"name":"ProgressBars_png"
 				}
 			]
 		}

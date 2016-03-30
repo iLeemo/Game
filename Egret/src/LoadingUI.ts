@@ -27,25 +27,60 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-class LoadingUI extends egret.Sprite {
+class LoadingUI extends egret.DisplayObjectContainer
+{
 
-    public constructor() {
+    public constructor()
+    {
         super();
         this.createView();
     }
 
-    private textField:egret.TextField;
+    private textField: eui.Label;
+    private uiLayer: eui.UILayer;
+    private progresImg: eui.Image;
+    private progressMake: eui.Image;
+    private maskRect;
 
-    private createView():void {
-        this.textField = new egret.TextField();
-        this.addChild(this.textField);
-        this.textField.y = 300;
-        this.textField.width = 480;
-        this.textField.height = 100;
+    private createView(): void
+    {
+
+        this.uiLayer = new eui.UILayer;
+        this.addChild(this.uiLayer);
+        this.progresImg = new eui.Image();
+        this.progresImg.source = "resource/assets/ProgressBars.png";
+        this.uiLayer.addChild(this.progresImg);
+        this.progressMake = new eui.Image();
+        this.progressMake.source = "resource/assets/ProgressMask.png";
+        this.uiLayer.addChild(this.progressMake);
+        this.progresImg.verticalCenter = 0;
+        this.progresImg.horizontalCenter = 0;
+
+        this.textField = new eui.Label();
+        this.progressMake.verticalCenter = 0;
+        this.progressMake.horizontalCenter = 0;
+        //this.progresImg.x = this.stage.stageWidth- this.progresImg.width<<1;
+        this.uiLayer.addChild(this.textField);
+        //this.textField.x = CONST.S -this.textField.width/2;
+        
+        this.textField.verticalCenter = -50;
+        this.textField.horizontalCenter = 0;
+        this.textField.width = 400;
         this.textField.textAlign = "center";
+        this.textField.size = 20;
+
+
+
     }
 
-    public setProgress(current, total):void {
-        this.textField.text = "Loading..." + current + "/" + total;
+    public setProgress(current,total): void
+    {
+        //this.textField.text = "Loading..." + current + "/" + total;
+        this.textField.text = "请稍等，精彩即将展现......" + Math.round(current / total * 100) + "%";
+        this.textField.x = this.stage.stageWidth - this.textField.width << 1;
+
+        var per: number = current / total;
+        this.maskRect = new egret.Rectangle(0,0,per * 152,20);
+        this.progressMake.mask = this.maskRect;
     }
 }
