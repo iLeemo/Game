@@ -48,26 +48,30 @@ class LoadingUI extends egret.DisplayObjectContainer
         this.uiLayer = new eui.UILayer;
         this.addChild(this.uiLayer);
         this.progresImg = new eui.Image();
-        this.progresImg.source = "resource/assets/ProgressBars.png";
-        this.uiLayer.addChild(this.progresImg);
-        this.progressMake = new eui.Image();
-        this.progressMake.source = "resource/assets/ProgressMask.png";
-        this.uiLayer.addChild(this.progressMake);
-        this.progresImg.verticalCenter = 0;
+        this.progresImg.source = "resource/assets/logo.png";
+        this.progresImg.verticalCenter = -150;
         this.progresImg.horizontalCenter = 0;
+        this.uiLayer.addChild(this.progresImg);
+       // this.progressMake = new eui.Image();
+       // this.progressMake.source = "resource/assets/ProgressMask.png";
+       // this.uiLayer.addChild(this.progressMake);
+
 
         this.textField = new eui.Label();
-        this.progressMake.verticalCenter = 0;
-        this.progressMake.horizontalCenter = 0;
+        //this.progressMake.verticalCenter = 0;
+       // this.progressMake.horizontalCenter = 0;
         //this.progresImg.x = this.stage.stageWidth- this.progresImg.width<<1;
-        this.uiLayer.addChild(this.textField);
-        //this.textField.x = CONST.S -this.textField.width/2;
+        
         
         this.textField.verticalCenter = -50;
         this.textField.horizontalCenter = 0;
-        this.textField.width = 400;
+        this.textField.width = 500;
         this.textField.textAlign = "center";
-        this.textField.size = 20;
+        this.textField.size = 28;
+        this.textField.textColor = 0x373737;
+        //this.textField.x = CONST.S -this.textField.width/2;
+        this.uiLayer.addChild(this.textField)
+;        
 
 
 
@@ -79,8 +83,9 @@ class LoadingUI extends egret.DisplayObjectContainer
         this.textField.text = "请稍等，精彩即将展现......" + Math.round(current / total * 100) + "%";
         this.textField.x = this.stage.stageWidth - this.textField.width << 1;
 
-        var per: number = current / total;
-        this.maskRect = new egret.Rectangle(0,0,per * 152,20);
-        this.progressMake.mask = this.maskRect;
+        //进度条Mask
+        //var per: number = current / total;
+        //this.maskRect = new egret.Rectangle(0,0,per * 152,20);
+        //this.progressMake.mask = this.maskRect;
     }
 }

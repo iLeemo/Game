@@ -1,5 +1,3 @@
-
-
 class Main extends eui.UILayer {
     /**
      * 加载进度界面
@@ -100,17 +98,16 @@ class Main extends eui.UILayer {
      * 创建场景界面
      * Create scene interface
      */
-    private board: GameScene = new GameScene();
+    private gameScene: GameScene = new GameScene();
     private uiLayer:eui.UILayer;
     private startCreateScene(): void {
     
         console.log("舞台大小为"+this.stage.stageHeight);
-        this.board.gameScene();
-        this.addChild(this.board);
-        this.board.breadmask.alpha =0;
-        this.board.touchEnabled = true;
-        this.board.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.touchBegin,this);
-        this.board.addEventListener(egret.TouchEvent.TOUCH_END,this.touchEnd,this);
+        this.gameScene.gameScene();
+        this.addChild(this.gameScene);
+        this.gameScene.touchEnabled = true;
+        this.gameScene.touchBtn.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.touchBegin,this);
+        this.gameScene.touchBtn.addEventListener(egret.TouchEvent.TOUCH_END,this.touchEnd,this);
         
     }
     
@@ -133,109 +130,138 @@ class Main extends eui.UILayer {
     private touchStart:number;
     private touchBegin(e:egret.TouchEvent){
         this.touchStart = egret.getTimer();
+        this.gameScene.people.source = "resource/assets/normal.png";
+        this.gameScene.resultText.text="烧烤中······";
         console.log("触摸开始"+this.touchStart);
-        this.board.breadmask.alpha = 0;
-        egret.Tween.get(this.board.breadmask).to({ alpha: 1 },6000,egret.Ease.circIn);
+        this.gameScene.goodFood.alpha = 0;
+        this.gameScene.badFood.alpha = 0;
+        egret.Tween.get(this.gameScene.goodFood).to({ alpha: 1 },5000,egret.Ease.circIn).call(this.badResult,this);
+        
     }
     
     private touchTime:number;
     private touchEnd(e:egret.TouchEvent){
         this.touchTime = egret.getTimer()-this.touchStart;
-        egret.Tween.pauseTweens(this.board.breadmask);
+        egret.Tween.pauseTweens(this.gameScene.goodFood);
+        egret.Tween.pauseTweens(this.gameScene.badFood);
         //console.log("触摸结束,触摸时间为"+this.touchTime);
         this.gameManager();
     }
     
+    private badResult(){
+        this.gameScene.badFood.alpha=0;
+        egret.Tween.get(this.gameScene.badFood).to({ alpha: 1 },1000,egret.Ease.circIn);
+    }
     private gameManager(){
         switch(true)
         {
+            case this.touchTime < 1000:
+                console.log("触摸结束,触摸时间为" + this.touchTime);
+                //this.gameScene.resultText.text = "窗口大小为"+this.gameScene.height;
+                this.gameScene.resultText.text = "同学，你在逗我吧..";
+                this.gameScene.people.source = "resource/assets/fail.png";
+                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
+                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
+                break;
+            
+            
             case this.touchTime >= 1000 && this.touchTime < 2000:
                 console.log("触摸结束，触摸时间为" + this.touchTime);
                 // textField.text = "哎呀,你太心急了，你得到了一个夹生的蛋糕！"
-                this.board.boardText.text = "哎呀,你太心急了，锅还没热呢！";
+                this.gameScene.resultText.text = "哎呀,你太心急了，火才刚升起来！";
+                this.gameScene.people.source = "resource/assets/fail.png";
                 //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                 // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
 
-            case this.touchTime < 1000:
-                console.log("触摸结束,触摸时间为" + this.touchTime);
-                //this.board.boardText.text = "窗口大小为"+this.board.height;
-                this.board.boardText.text = "同学，你在逗我吧..";
-               // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
-               // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
-                break;
-
             case this.touchTime >= 2000 && this.touchTime < 3000:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
-                this.board.boardText.text = "你太心急了，面包才刚开始烘焙！";
+                this.gameScene.resultText.text = "你太心急了，羊排才刚放在烤架上";
+                this.gameScene.people.source = "resource/assets/fail.png";
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
 
-            case this.touchTime >= 3000 && this.touchTime < 3500:
+            case this.touchTime >= 3000 && this.touchTime < 4100:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
-                this.board.boardText.text = "经过不懈的努力，你获得了五分熟的面包，打败了全国32%的面包师!";
+                this.gameScene.resultText.text = "骚年，不要心急，羊排才烤没多久呢";
+                this.gameScene.people.source = "resource/assets/fail.png";
              //   this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
               //  this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
 
-            case this.touchTime >= 3500 && this.touchTime < 4100:
-                console.log("触摸结束,触摸时间为" + this.touchTime);
-                this.board.boardText.text = "经过不懈的努力，你获得了六分熟的面包，打败了全国53%的面包师";
+            //case this.touchTime >= 3500 && this.touchTime < 4100:
+             //   console.log("触摸结束,触摸时间为" + this.touchTime);
+             //   this.gameScene.resultText.text = "经过不懈的努力，你获得了六分熟的羊腿，打败了全国53%的面包师";
              //   this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
               //  this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
 
-            case this.touchTime >= 4100 && this.touchTime < 4500:
+            case this.touchTime >= 4100 && this.touchTime < 4600:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
-                this.board.boardText.text = "经过不懈的努力，你获得了七分熟的面包，打败了全国60%的面包师";
+                this.gameScene.resultText.text = "哇哦，一番努力后，你获得了六分熟的烤羊排，打败了全国61%的厨师！哪位勇士来尝一下？";
+                this.gameScene.people.source = "resource/assets/success.png";
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
 
-            case this.touchTime >= 4500 && this.touchTime < 4800:
+            case this.touchTime >= 4600 && this.touchTime < 4850:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
-                this.board.boardText.text = "经过不懈的努力，你获得了八分熟的面包，打败了全国80%的面包师！";
+                this.gameScene.resultText.text = "可以呀，一番努力后，你获得了八分熟的羊排，打败了全国83%的厨师！";
+                this.gameScene.people.source = "resource/assets/success.png";
               //  this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
 
-            case this.touchTime >= 4800 && this.touchTime < 4950:
+            case this.touchTime >= 4850 && this.touchTime < 4950:
                 console.log("触摸结束,触摸时间不为" + this.touchTime);
-                this.board.boardText.text = "天呐！经过不懈的努力，你获得了九分熟的面包，打败了全国90%的面包师！";
+                this.gameScene.resultText.text = "太好啦！一番努力后，你获得了九分熟的烤羊排，打败了全国92%的厨师！吃货可以上啦！";
+                this.gameScene.people.source = "resource/assets/success.png";
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
 
-            case this.touchTime >= 4950 && this.touchTime < 5050:
+            case this.touchTime >= 4950 && this.touchTime < 5000:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
-                this.board.boardText.text = "简直完美，经过不懈的努力，你获得了色香味俱全的黄金面包，打败了全国99%的面包师！";
+                this.gameScene.resultText.text = "吃货之神！一番努力后，你获得了色香味俱全的完美黄金烤羊排，打败了全国99%的厨师！赶紧开个烧烤店走向人生巅峰吧";
+                this.gameScene.people.source = "resource/assets/prefect.png";
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
 
-            case this.touchTime >= 5050 && this.touchTime < 5300:
+            case this.touchTime >= 5000 && this.touchTime < 5300:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
-                this.board.boardText.text = "经过你不懈的努力，你获得了略微烤糊的面包，超过了全国60%的面包师";
+                this.gameScene.resultText.text = "哎呀，烤太过了，你只得到了烤糊了的羊排";
+                this.gameScene.people.source = "resource/assets/bad.png";
                 //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
-               // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
+                //this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
 
             case this.touchTime >= 5300 && this.touchTime < 6000:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
-                this.board.boardText.text = "太遗憾了，面包烤的太久了，你获得了烤焦了的面包"
-                //this.overText.text = "天呐！世上真的有这样的面包师，你居然做出了品质为10的绝世面包，据说，这种品质的面包已经有1000年没有出世了！";
+                this.gameScene.resultText.text = "太遗憾了，面包烤的太久了，羊排都被你烤焦了"
+                this.gameScene.people.source = "resource/assets/bad.png";
+               //this.overText.text = "天呐！世上真的有这样的面包师，你居然做出了品质为10的绝世面包，据说，这种品质的面包已经有1000年没有出世了！";
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
 
-            case this.touchTime >= 6000:                                //&& this.touchTime < 7000:
+            case this.touchTime >= 6000 && this.touchTime < 7000:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
-                this.board.boardText.text = "糟糕，烤的时间太长了，面包都快被烤成炭了！";
+                this.gameScene.resultText.text = "亲，你是木炭烤羊排还是羊排烤木炭，再折腾下，羊排就成炭了！";
+                this.gameScene.people.source = "resource/assets/bad.png";
                 //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
-               // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
+                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break; 
-        
+                
+            case this.touchTime >= 7000:
+                console.log("触摸结束,触摸时间为" + this.touchTime);
+                this.gameScene.resultText.text = "亲，你是木炭烤羊排还是羊排烤木炭，再折腾下，羊排就成炭了！";
+                this.gameScene.people.source = "resource/assets/bad.png";
+                //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
+                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
+                break; 
+                
     }
 }
 }

@@ -1,48 +1,83 @@
 {
 	"groups":[{
-			"keys":"bgimage,board,bread,bread_mask,people,GameFont_fnt",
+			"keys":"people,bad_png,badfood_png,barbecue_png,button_png,fail_png,food_png,goodfood_png,logo_png,normal_png,prefect_png,share_png,slogan_png,success_png,items_png",
 			"name":"preload"
 		}],
 	"resources":[
-		{
-			"name":"bgimage",
-			"type":"image",
-			"url":"assets/bg.jpg"
-		},
-		{
-			"name":"board",
-			"type":"image",
-			"url":"assets/board.png"
-		},
-		{
-			"name":"bread",
-			"type":"image",
-			"url":"assets/bread.png"
-		},
-		{
-			"name":"bread_mask",
-			"type":"image",
-			"url":"assets/bread_mask.png"
-		},
 		{
 			"name":"people",
 			"type":"image",
 			"url":"assets/people.png"
 		},
 		{
-			"name":"GameFont_fnt",
-			"type":"font",
-			"url":"assets/GameFont.fnt"
+			"name":"bad_png",
+			"type":"image",
+			"url":"assets/bad.png"
 		},
 		{
-			"name":"ProgressMask_png",
+			"name":"badfood_png",
 			"type":"image",
-			"url":"assets/ProgressMask.png"
+			"url":"assets/badfood.png"
 		},
 		{
-			"name":"ProgressBars_png",
+			"name":"barbecue_png",
 			"type":"image",
-			"url":"assets/ProgressBars.png"
+			"url":"assets/barbecue.png"
+		},
+		{
+			"name":"button_png",
+			"type":"image",
+			"url":"assets/button.png"
+		},
+		{
+			"name":"fail_png",
+			"type":"image",
+			"url":"assets/fail.png"
+		},
+		{
+			"name":"food_png",
+			"type":"image",
+			"url":"assets/food.png"
+		},
+		{
+			"name":"goodfood_png",
+			"type":"image",
+			"url":"assets/goodfood.png"
+		},
+		{
+			"name":"logo_png",
+			"type":"image",
+			"url":"assets/logo.png"
+		},
+		{
+			"name":"normal_png",
+			"type":"image",
+			"url":"assets/normal.png"
+		},
+		{
+			"name":"prefect_png",
+			"type":"image",
+			"url":"assets/prefect.png"
+		},
+		{
+			"name":"share_png",
+			"type":"image",
+			"url":"assets/share.png"
+		},
+		{
+			"name":"slogan_png",
+			"type":"image",
+			"url":"assets/slogan.png"
+		},
+		{
+			"name":"success_png",
+			"type":"image",
+			"url":"assets/success.png"
+		},
+		{
+			"name":"items_png",
+			"type":"image",
+			"url":"assets/items.png"
 		}
 	]
 }
