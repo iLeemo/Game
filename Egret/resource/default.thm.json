@@ -1,7 +1,5 @@
 {
   "autoGenerateExmlsList": true,
-  "exmls": [
-    "resource/eui_skins/boardSkin.exml"
-  ],
+  "exmls": [],
   "skins": {}
 }

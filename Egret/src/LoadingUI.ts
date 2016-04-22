@@ -48,7 +48,7 @@ class LoadingUI extends egret.DisplayObjectContainer
         this.uiLayer = new eui.UILayer;
         this.addChild(this.uiLayer);
         this.progresImg = new eui.Image();
-        this.progresImg.source = "resource/assets/logo.png";
+        this.progresImg.source = "resource/assets/blacklogo.png";
         this.progresImg.verticalCenter = -150;
         this.progresImg.horizontalCenter = 0;
         this.uiLayer.addChild(this.progresImg);

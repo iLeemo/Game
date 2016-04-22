@@ -108,6 +108,7 @@ class Main extends eui.UILayer {
         this.gameScene.touchEnabled = true;
         this.gameScene.touchBtn.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.touchBegin,this);
         this.gameScene.touchBtn.addEventListener(egret.TouchEvent.TOUCH_END,this.touchEnd,this);
+        this.gameScene.touchBtn.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.touchEnd,this);
         
     }
     
@@ -119,13 +120,7 @@ class Main extends eui.UILayer {
         return result;
     }
 
-    private onButtonClick(e: egret.TouchEvent) {
-        var panel = new eui.Panel();
-        panel.title = "Title";
-        panel.horizontalCenter = 0;
-        panel.verticalCenter = 0;
-        this.addChild(panel);
-    }
+
     
     private touchStart:number;
     private touchBegin(e:egret.TouchEvent){
@@ -135,6 +130,12 @@ class Main extends eui.UILayer {
         console.log("触摸开始"+this.touchStart);
         this.gameScene.goodFood.alpha = 0;
         this.gameScene.badFood.alpha = 0;
+        if(this.gameScene.getChildByName("share"))
+        {
+            this.gameScene.removeChild(this.gameScene.share);//要不要检查为空？,哈哈，果然需要
+        }
+      //  this.gameScene.removeChild(this.gameScene.share);//要不要检查为空？,哈哈，果然需要
+     //   this.gameScene.share.
         egret.Tween.get(this.gameScene.goodFood).to({ alpha: 1 },5000,egret.Ease.circIn).call(this.badResult,this);
         
     }
@@ -159,7 +160,9 @@ class Main extends eui.UILayer {
                 console.log("触摸结束,触摸时间为" + this.touchTime);
                 //this.gameScene.resultText.text = "窗口大小为"+this.gameScene.height;
                 this.gameScene.resultText.text = "同学，你在逗我吧..";
-                this.gameScene.people.source = "resource/assets/fail.png";
+                this.gameScene.people.source = RES.getRes("fail_png");
+                //this.gameScene.people.source = "resource/assets/fail.png";
+                this.gameScene.ShareButton();
                 // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                 // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -169,7 +172,9 @@ class Main extends eui.UILayer {
                 console.log("触摸结束，触摸时间为" + this.touchTime);
                 // textField.text = "哎呀,你太心急了，你得到了一个夹生的蛋糕！"
                 this.gameScene.resultText.text = "哎呀,你太心急了，火才刚升起来！";
-                this.gameScene.people.source = "resource/assets/fail.png";
+                this.gameScene.people.source = RES.getRes("fail_png");
+                //this.gameScene.people.source = "resource/assets/fail.png";
+                this.gameScene.ShareButton();
                 //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                 // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -177,7 +182,9 @@ class Main extends eui.UILayer {
             case this.touchTime >= 2000 && this.touchTime < 3000:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
                 this.gameScene.resultText.text = "你太心急了，羊排才刚放在烤架上";
-                this.gameScene.people.source = "resource/assets/fail.png";
+                this.gameScene.people.source = RES.getRes("fail_png");
+                //this.gameScene.people.source = "resource/assets/fail.png";
+                this.gameScene.ShareButton();
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -185,7 +192,9 @@ class Main extends eui.UILayer {
             case this.touchTime >= 3000 && this.touchTime < 4100:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
                 this.gameScene.resultText.text = "骚年，不要心急，羊排才烤没多久呢";
-                this.gameScene.people.source = "resource/assets/fail.png";
+                this.gameScene.people.source = RES.getRes("fail_png");
+                //this.gameScene.people.source = "resource/assets/fail.png";
+                this.gameScene.ShareButton();
              //   this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
               //  this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -200,7 +209,9 @@ class Main extends eui.UILayer {
             case this.touchTime >= 4100 && this.touchTime < 4600:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
                 this.gameScene.resultText.text = "哇哦，一番努力后，你获得了六分熟的烤羊排，打败了全国61%的厨师！哪位勇士来尝一下？";
-                this.gameScene.people.source = "resource/assets/success.png";
+                this.gameScene.people.source = RES.getRes("success_png");
+                //this.gameScene.people.source = "resource/assets/success.png";
+                this.gameScene.ShareButton();
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -208,7 +219,9 @@ class Main extends eui.UILayer {
             case this.touchTime >= 4600 && this.touchTime < 4850:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
                 this.gameScene.resultText.text = "可以呀，一番努力后，你获得了八分熟的羊排，打败了全国83%的厨师！";
-                this.gameScene.people.source = "resource/assets/success.png";
+                this.gameScene.people.source = RES.getRes("success_png");
+                //this.gameScene.people.source = "resource/assets/success.png";
+                this.gameScene.ShareButton();
               //  this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -216,7 +229,9 @@ class Main extends eui.UILayer {
             case this.touchTime >= 4850 && this.touchTime < 4950:
                 console.log("触摸结束,触摸时间不为" + this.touchTime);
                 this.gameScene.resultText.text = "太好啦！一番努力后，你获得了九分熟的烤羊排，打败了全国92%的厨师！吃货可以上啦！";
-                this.gameScene.people.source = "resource/assets/success.png";
+                this.gameScene.people.source = RES.getRes("success_png");
+                //this.gameScene.people.source = "resource/assets/success.png";
+                this.gameScene.ShareButton();
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -224,7 +239,9 @@ class Main extends eui.UILayer {
             case this.touchTime >= 4950 && this.touchTime < 5000:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
                 this.gameScene.resultText.text = "吃货之神！一番努力后，你获得了色香味俱全的完美黄金烤羊排，打败了全国99%的厨师！赶紧开个烧烤店走向人生巅峰吧";
-                this.gameScene.people.source = "resource/assets/prefect.png";
+                this.gameScene.people.source = RES.getRes("prefect_png");
+                //this.gameScene.people.source = "resource/assets/prefect.png";
+                this.gameScene.ShareButton();
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -232,7 +249,9 @@ class Main extends eui.UILayer {
             case this.touchTime >= 5000 && this.touchTime < 5300:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
                 this.gameScene.resultText.text = "哎呀，烤太过了，你只得到了烤糊了的羊排";
-                this.gameScene.people.source = "resource/assets/bad.png";
+                this.gameScene.people.source = RES.getRes("bad_png");
+                //this.gameScene.people.source = "resource/assets/bad.png";
+                this.gameScene.ShareButton();
                 //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                 //this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -240,7 +259,9 @@ class Main extends eui.UILayer {
             case this.touchTime >= 5300 && this.touchTime < 6000:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
                 this.gameScene.resultText.text = "太遗憾了，面包烤的太久了，羊排都被你烤焦了"
-                this.gameScene.people.source = "resource/assets/bad.png";
+                this.gameScene.people.source = RES.getRes("bad_png");
+                //this.gameScene.people.source = "resource/assets/bad.png";
+                this.gameScene.ShareButton();
                //this.overText.text = "天呐！世上真的有这样的面包师，你居然做出了品质为10的绝世面包，据说，这种品质的面包已经有1000年没有出世了！";
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
@@ -249,7 +270,9 @@ class Main extends eui.UILayer {
             case this.touchTime >= 6000 && this.touchTime < 7000:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
                 this.gameScene.resultText.text = "亲，你是木炭烤羊排还是羊排烤木炭，再折腾下，羊排就成炭了！";
-                this.gameScene.people.source = "resource/assets/bad.png";
+                this.gameScene.people.source = RES.getRes("bad_png");
+                //this.gameScene.people.source = "resource/assets/bad.png";
+                this.gameScene.ShareButton();
                 //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                 // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break; 
@@ -257,7 +280,9 @@ class Main extends eui.UILayer {
             case this.touchTime >= 7000:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
                 this.gameScene.resultText.text = "亲，你是木炭烤羊排还是羊排烤木炭，再折腾下，羊排就成炭了！";
-                this.gameScene.people.source = "resource/assets/bad.png";
+                this.gameScene.people.source = RES.getRes("bad_png");
+                //this.gameScene.people.source = "resource/assets/bad.png";
+                this.gameScene.ShareButton();
                 //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                 // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break; 

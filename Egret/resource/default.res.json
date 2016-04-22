@@ -1,6 +1,6 @@
 {
 	"groups":[{
-			"keys":"people,bad_png,badfood_png,barbecue_png,button_png,fail_png,food_png,goodfood_png,logo_png,normal_png,prefect_png,share_png,slogan_png,success_png,items_png",
+			"keys":"people,bad_png,badfood_png,barbecue_png,button_png,fail_png,food_png,goodfood_png,logo_png,normal_png,prefect_png,share_png,slogan_png,success_png,items_png,bg_png",
 			"name":"preload"
 		}],
 	"resources":[
@@ -78,6 +78,11 @@
 			"name":"items_png",
 			"type":"image",
 			"url":"assets/items.png"
+		},
+		{
+			"name":"bg_png",
+			"type":"image",
+			"url":"assets/bg.png"
 		}
 	]
 }

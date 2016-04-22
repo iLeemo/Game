@@ -83,6 +83,11 @@
 					"isFolder":false,
 					"key":"items_png",
 					"name":"items_png"
+				},
+				{
+					"isFolder":false,
+					"key":"bg_png",
+					"name":"bg_png"
 				}
 			]
 		}
