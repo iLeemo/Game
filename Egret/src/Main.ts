@@ -123,6 +123,7 @@ class Main extends eui.UILayer {
 
     
     private touchStart:number;
+  
     private touchBegin(e:egret.TouchEvent){
         this.touchStart = egret.getTimer();
         this.gameScene.people.source = "resource/assets/normal.png";
@@ -130,6 +131,12 @@ class Main extends eui.UILayer {
         console.log("触摸开始"+this.touchStart);
         this.gameScene.goodFood.alpha = 0;
         this.gameScene.badFood.alpha = 0;
+        this.gameScene.glowfront_3System.stop();
+        this.gameScene.glowfront_2System.stop();
+        this.gameScene.glowfront_1System.stop();
+        this.gameScene.glowbackSystem.stop();
+        
+        this.gameScene.fireSystem.start();
         if(this.gameScene.getChildByName("share"))
         {
             this.gameScene.removeChild(this.gameScene.share);//要不要检查为空？,哈哈，果然需要
@@ -163,6 +170,20 @@ class Main extends eui.UILayer {
                 this.gameScene.people.source = RES.getRes("fail_png");
                 //this.gameScene.people.source = "resource/assets/fail.png";
                 this.gameScene.ShareButton();
+                
+                var particleTimer: egret.Timer = new egret.Timer(800,1);
+                particleTimer.addEventListener(egret.TimerEvent.TIMER,this.timerComplete,this);
+                particleTimer.start();
+                this.gameScene.glowbackSystem.start();
+                this.gameScene.glowfront_3System.start();
+                this.gameScene.glowfront_2System.start();
+                this.gameScene.glowfront_1System.start();
+                
+                
+                
+                //this.particleTimer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,this.timerComplete,this);
+
+                
                 // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                 // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -262,9 +283,6 @@ class Main extends eui.UILayer {
                 this.gameScene.people.source = RES.getRes("bad_png");
                 //this.gameScene.people.source = "resource/assets/bad.png";
                 this.gameScene.ShareButton();
-               //this.overText.text = "天呐！世上真的有这样的面包师，你居然做出了品质为10的绝世面包，据说，这种品质的面包已经有1000年没有出世了！";
-               // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
-               // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
 
             case this.touchTime >= 6000 && this.touchTime < 7000:
@@ -286,7 +304,24 @@ class Main extends eui.UILayer {
                 //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                 // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break; 
+
                 
     }
 }
+
+    private timerStart(){
+        console.log("粒子启动");
+        this.gameScene.glowbackSystem.start();
+        this.gameScene.glowfront_3System.start();
+        this.gameScene.glowfront_2System.start();
+        this.gameScene.glowfront_1System.start();
+    }
+    
+    private timerComplete(){
+        this.gameScene.glowbackSystem.stop();
+        this.gameScene.glowfront_3System.stop();
+        this.gameScene.glowfront_2System.stop();
+        this.gameScene.glowfront_1System.stop();
+    }
+    
 }

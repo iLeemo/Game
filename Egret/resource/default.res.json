@@ -1,14 +1,9 @@
 {
 	"groups":[{
-			"keys":"people,bad_png,badfood_png,barbecue_png,button_png,fail_png,food_png,goodfood_png,logo_png,normal_png,prefect_png,share_png,slogan_png,success_png,items_png,bg_png",
+			"keys":"bad_png,badfood_png,button_png,fail_png,food_png,goodfood_png,logo_png,normal_png,prefect_png,share_png,slogan_png,success_png,items_png,bg_png,snow_json,snow_png,glowback_json,glowback_png,gameConfig_json,glowfront_1_json,glowfront_1_png,glowfront_2_json,glowfront_2_png,glowfront_3_json,glowfront_3_png,fireConfig_json,fireImg_png",
 			"name":"preload"
 		}],
 	"resources":[
-		{
-			"name":"people",
-			"type":"image",
-			"url":"assets/people.png"
-		},
 		{
 			"name":"bad_png",
 			"type":"image",
@@ -18,11 +13,6 @@
 			"name":"badfood_png",
 			"type":"image",
 			"url":"assets/badfood.png"
-		},
-		{
-			"name":"barbecue_png",
-			"type":"image",
-			"url":"assets/barbecue.png"
 		},
 		{
 			"name":"button_png",
@@ -83,6 +73,71 @@
 			"name":"bg_png",
 			"type":"image",
 			"url":"assets/bg.png"
+		},
+		{
+			"name":"snow_json",
+			"type":"json",
+			"url":"assets/snow.json"
+		},
+		{
+			"name":"snow_png",
+			"type":"image",
+			"url":"assets/snow.png"
+		},
+		{
+			"name":"glowback_json",
+			"type":"json",
+			"url":"assets/glowback.json"
+		},
+		{
+			"name":"glowback_png",
+			"type":"image",
+			"url":"assets/glowback.png"
+		},
+		{
+			"name":"gameConfig_json",
+			"type":"json",
+			"url":"assets/gameConfig.json"
+		},
+		{
+			"name":"glowfront_1_json",
+			"type":"json",
+			"url":"assets/glowfront_1.json"
+		},
+		{
+			"name":"glowfront_1_png",
+			"type":"image",
+			"url":"assets/glowfront_1.png"
+		},
+		{
+			"name":"glowfront_2_json",
+			"type":"json",
+			"url":"assets/glowfront_2.json"
+		},
+		{
+			"name":"glowfront_2_png",
+			"type":"image",
+			"url":"assets/glowfront_2.png"
+		},
+		{
+			"name":"glowfront_3_json",
+			"type":"json",
+			"url":"assets/glowfront_3.json"
+		},
+		{
+			"name":"glowfront_3_png",
+			"type":"image",
+			"url":"assets/glowfront_3.png"
+		},
+		{
+			"name":"fireConfig_json",
+			"type":"json",
+			"url":"assets/fireConfig.json"
+		},
+		{
+			"name":"fireImg_png",
+			"type":"image",
+			"url":"assets/fireImg.png"
 		}
 	]
 }

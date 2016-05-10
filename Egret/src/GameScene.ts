@@ -12,6 +12,28 @@ class GameScene extends eui.UILayer{
 	 public goodFood:eui.Image = new eui.Image();
 	 public badFood:eui.Image = new eui.Image();
 	 public people: eui.Image = new eui.Image();
+     public position;
+     
+     public glowbackImg;
+     public glowbackConfig;
+     public glowbackSystem:particle.GravityParticleSystem;
+     //1是最前面，对应前，2对应中2 ，3对应中。
+     public glowfront_1Img;
+     public glowfront_1Config;
+     public glowfront_1System:particle.GravityParticleSystem;
+     
+     public glowfront_2Img;
+     public glowfront_2Config;
+     public glowfront_2System:particle.GravityParticleSystem;
+     
+     public glowfront_3Img;
+     public glowfront_3Config;
+     public glowfront_3System: particle.GravityParticleSystem;
+     
+     public fireImg;
+     public fireConfig;
+     public fireSystem:particle.GravityParticleSystem;
+     
 	 //public resultText:eui.BitmapLabel = new eui.BitmapLabel();
      public resultText: eui.Label = new eui.Label();
 	 //public resultText:egret.TextField = new egret.TextField();
@@ -20,42 +42,51 @@ class GameScene extends eui.UILayer{
     	//var bgImg:eui.Image = new eui.Image();
     	//bgImg.source = "resource/assets/bg.jpg";
     	//this.addChild(bgImg);
-    	
+         
     	 var bgimg:eui.Image = new eui.Image();
          bgimg.source = RES.getRes("bg_png");
-         bgimg.horizontalCenter = 0
+         this.position = RES.getRes("gameConfig_json");
+         bgimg.horizontalCenter = this.position._logo.horcenter;
          this.addChild(bgimg);
+        
     	
     	var items:eui.Image = new eui.Image();
     	items.source = RES.getRes("items_png");
     	//items.source = "resource/assets/items.png";
     	this.addChild(items);
-    	items.bottom = 180;
-    	items.horizontalCenter =0; 	
+    	items.bottom = this.position._items.bottom;
+        items.horizontalCenter = this.position._items.horcenter; 	
         
-    	var tittle:eui.Image = new eui.Image();
-        tittle.source = RES.getRes("slogan_png");
-        tittle.bottom = items.bottom+160;
-        this.addChild(tittle);
+    	var title:eui.Image = new eui.Image();
+        title.source = RES.getRes("slogan_png");
+        title.bottom = items.bottom + this.position._title.bottom;
+        this.addChild(title);
+        
+        this.glowbackImg = RES.getRes("glowback_png");
+        this.glowbackConfig = RES.getRes("glowback_json");
+        this.glowbackSystem = new particle.GravityParticleSystem(this.glowbackImg,this.glowbackConfig);
+        this.glowbackSystem.x = 100;
+        this.glowbackSystem.y = 100;
+        this.addChild(this.glowbackSystem);
         
     	this.people.source = RES.getRes("normal_png")
     	//this.people.source = "resource/assets/normal.png";
-        this.people.bottom = items.bottom + 280;
-        this.people.horizontalCenter = 35;
+        this.people.bottom = items.bottom + this.position._people.bottom;
+        this.people.horizontalCenter = this.position._people.horcenter;
     	this.addChild(this.people);
     	console.log("窗口大小为"+window.screen.height);
     	//people.verticalCenter = (-window.screen.height*0.2);	
     	console.log(items.bottom);
     	
         this.swapChildren(this.people,items);
-        this.swapChildren(items,tittle);
+        this.swapChildren(items,title);
     	
     	var food: eui.Image = new eui.Image();
     	food.source = RES.getRes("food_png");
     	//food.source = "resource/assets/food.png";
     	this.addChild(food);
-    	food.bottom = items.bottom+225 ;
-    	food.horizontalCenter = 85;
+    	food.bottom = items.bottom+this.position._food.bottom ;
+    	food.horizontalCenter = this.position._food.horcenter;
     	
     	this.goodFood.source = RES.getRes("goodfood_png");//坑爹啊，找不到也不报错..
     	//this.goodFood.source = "resource/assets/goodfood.png";
@@ -72,34 +103,69 @@ class GameScene extends eui.UILayer{
         this.badFood.alpha =0;
         
     	//this.resultText.font = RES.getRes("GameFont_fnt");
-        this.resultText.bottom = 50;
-        this.resultText.width = 610;
-        this.resultText.textColor =0x373737;
-        this.resultText.lineSpacing=5;
-        this.resultText.textAlign = "center";
-    	this.resultText.text = "Tip:长按上面的“火”按钮开始烧烤，松开即结束烧烤，注意观察并确定烧烤时间哦";
-    	this.resultText.textColor = 0xFFFFFF;
+        this.resultText.bottom = this.position._resultText.bottom;
+        this.resultText.width = this.position._resultText.width;
+        this.resultText.lineSpacing = this.position._resultText.lineSpacing;
+        this.resultText.textAlign = this.position._resultText.textAlign;
+        this.resultText.text = this.position._resultText.text;
+        this.resultText.textColor = this.position._resultText.textColor;
+        this.resultText.horizontalCenter = this.position._resultText.horcenter;
     	this.addChild(this.resultText);
-
-    	//this.resultText.bottom = items.bottom+200;
-    	this.resultText.horizontalCenter =0;
     	
     	//点击按钮
     	this.touchBtn.source = RES.getRes("button_png");
     	//this.touchBtn.source = "resource/assets/button.png"
     	this.touchBtn.touchEnabled = true;
-    	this.touchBtn.bottom = 150;
-    	this.touchBtn.horizontalCenter=0;
+    	this.touchBtn.bottom = this.position._touchBtn.bottom;
+        this.touchBtn.horizontalCenter = this.position._touchBtn.horcenter;
     	this.addChild(this.touchBtn);
     	
     	var logo :eui.Image = new eui.Image();
     	logo.source = RES.getRes("logo_png");
         //logo.source = "resource/assets/logo.png"
-        logo.top = 5;
-        logo.left =5;
+        logo.top = this.position._logo.top;
+        logo.left =this.position._logo.left;
         this.addChild(logo);
         
+        /*粒子实验
+        var texure = RES.getRes("snow_png");
+        var config = RES.getRes("snow_json");
+        var system = new particle.GravityParticleSystem(texure,config);
+        this.addChild(system);
+        system.start();
+        */
+        
 
+        
+        this.glowfront_3Img = RES.getRes("glowfront_3_png");
+        this.glowfront_3Config = RES.getRes("glowfront_3_json");
+        this.glowfront_3System = new particle.GravityParticleSystem(this.glowfront_3Img,this.glowfront_3Config);
+        this.glowfront_3System.x = 100;
+        this.glowfront_3System.y = 100;
+        this.addChild(this.glowfront_3System);
+        
+        this.glowfront_2Img = RES.getRes("glowfront_2_png");
+        this.glowfront_2Config = RES.getRes("glowfront_2_json");
+        this.glowfront_2System = new particle.GravityParticleSystem(this.glowfront_2Img,this.glowfront_2Config);
+        this.glowfront_2System.x = 100;
+        this.glowfront_2System.y = 100;
+        this.addChild(this.glowfront_2System);
+     
+        this.glowfront_1Img = RES.getRes("glowfront_1_png");
+        this.glowfront_1Config = RES.getRes("glowfront_1_json");
+        this.glowfront_1System = new particle.GravityParticleSystem(this.glowfront_1Img,this.glowfront_1Config);
+        this.glowfront_1System.x = 100;
+        this.glowfront_1System.y = 100;
+        this.addChild(this.glowfront_1System);
+        
+        this.fireImg = RES.getRes("fireImg_png");
+        this.fireConfig = RES.getRes("fireConfig_json");
+        this.fireSystem = new particle.GravityParticleSystem(this.fireImg,this.fireConfig);
+        this.fireSystem.x = 150;
+        this.fireSystem.y = 400;
+        this.addChild(this.fireSystem);
+        
+        
         
     	
 	}
@@ -109,13 +175,15 @@ class GameScene extends eui.UILayer{
 	public ShareButton(){
         this.share.source = RES.getRes("share_png");
         //this.share.source = "resource/assets/share.png"
-        this.share.top = 5;
-        this.share.right = 5;
+        this.share.top = this.position._share.top;
+        this.share.right = this.position._share.right;
         this.share.name ="share";
         this.share.alpha = 0;
         this.addChild(this.share);
         egret.Tween.get(this.share).to({ alpha: 1 },200,egret.Ease.circIn);
 	}
 	
+
+
 
 }
