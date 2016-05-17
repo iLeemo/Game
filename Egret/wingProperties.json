@@ -1,4 +1,5 @@
 {
+	"natures":["egretProject"],
 	"resourcePlugin":{
 		"configs":[{
 				"configPath":"resource/default.res.json",
@@ -595,6 +596,11 @@
 					"isFolder":false,
 					"key":"resource/assets/fireImg.png",
 					"name":"fireImg.png"
+				},
+				{
+					"isFolder":false,
+					"key":"resource/assets/star.png",
+					"name":"star.png"
 				}
 			]
 		}

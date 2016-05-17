@@ -1,6 +1,6 @@
 /**
  *
- * @author
+ * @author 李源哲
  *
  */
 var GameScene = (function (_super) {
@@ -37,12 +37,12 @@ var GameScene = (function (_super) {
         title.source = RES.getRes("slogan_png");
         title.bottom = items.bottom + this.position._title.bottom;
         this.addChild(title);
-        this.glowbackImg = RES.getRes("glowback_png");
-        this.glowbackConfig = RES.getRes("glowback_json");
-        this.glowbackSystem = new particle.GravityParticleSystem(this.glowbackImg, this.glowbackConfig);
-        this.glowbackSystem.x = 100;
-        this.glowbackSystem.y = 100;
-        this.addChild(this.glowbackSystem);
+        //this.glowbackImg = RES.getRes("glowback_png");
+        //this.glowbackConfig = RES.getRes("glowback_json");
+        //this.glowbackSystem = new particle.GravityParticleSystem(this.glowbackImg, this.glowbackConfig);
+        //this.glowbackSystem.x = 100;
+        //this.glowbackSystem.y = 100;
+        //this.addChild(this.glowbackSystem);
         this.people.source = RES.getRes("normal_png");
         //this.people.source = "resource/assets/normal.png";
         this.people.bottom = items.bottom + this.position._people.bottom;
@@ -71,7 +71,8 @@ var GameScene = (function (_super) {
         this.badFood.horizontalCenter = food.horizontalCenter; //同上
         this.goodFood.alpha = 0;
         this.badFood.alpha = 0;
-        //this.resultText.font = RES.getRes("GameFont_fnt");
+        //游戏结果判断文字
+        //this.resultText.font = RES.getRes("GameFont_fnt");取消位图字体
         this.resultText.bottom = this.position._resultText.bottom;
         this.resultText.width = this.position._resultText.width;
         this.resultText.lineSpacing = this.position._resultText.lineSpacing;
@@ -79,6 +80,7 @@ var GameScene = (function (_super) {
         this.resultText.text = this.position._resultText.text;
         this.resultText.textColor = this.position._resultText.textColor;
         this.resultText.horizontalCenter = this.position._resultText.horcenter;
+        this.resultText.lineSpacing = 10;
         this.addChild(this.resultText);
         //点击按钮
         this.touchBtn.source = RES.getRes("button_png");
@@ -87,12 +89,20 @@ var GameScene = (function (_super) {
         this.touchBtn.bottom = this.position._touchBtn.bottom;
         this.touchBtn.horizontalCenter = this.position._touchBtn.horcenter;
         this.addChild(this.touchBtn);
+        //Logo
         var logo = new eui.Image();
         logo.source = RES.getRes("logo_png");
         //logo.source = "resource/assets/logo.png"
         logo.top = this.position._logo.top;
         logo.left = this.position._logo.left;
         this.addChild(logo);
+        //火焰粒子
+        this.fireImg = RES.getRes("fireImg_png");
+        this.fireConfig = RES.getRes("fireConfig_json");
+        this.fireSystem = new particle.GravityParticleSystem(this.fireImg, this.fireConfig);
+        this.fireSystem.x = 150;
+        this.fireSystem.y = 400;
+        this.addChild(this.fireSystem);
         /*粒子实验
         var texure = RES.getRes("snow_png");
         var config = RES.getRes("snow_json");
@@ -100,30 +110,37 @@ var GameScene = (function (_super) {
         this.addChild(system);
         system.start();
         */
-        this.glowfront_3Img = RES.getRes("glowfront_3_png");
-        this.glowfront_3Config = RES.getRes("glowfront_3_json");
-        this.glowfront_3System = new particle.GravityParticleSystem(this.glowfront_3Img, this.glowfront_3Config);
-        this.glowfront_3System.x = 100;
-        this.glowfront_3System.y = 100;
-        this.addChild(this.glowfront_3System);
-        this.glowfront_2Img = RES.getRes("glowfront_2_png");
-        this.glowfront_2Config = RES.getRes("glowfront_2_json");
-        this.glowfront_2System = new particle.GravityParticleSystem(this.glowfront_2Img, this.glowfront_2Config);
-        this.glowfront_2System.x = 100;
-        this.glowfront_2System.y = 100;
-        this.addChild(this.glowfront_2System);
-        this.glowfront_1Img = RES.getRes("glowfront_1_png");
-        this.glowfront_1Config = RES.getRes("glowfront_1_json");
-        this.glowfront_1System = new particle.GravityParticleSystem(this.glowfront_1Img, this.glowfront_1Config);
-        this.glowfront_1System.x = 100;
-        this.glowfront_1System.y = 100;
-        this.addChild(this.glowfront_1System);
-        this.fireImg = RES.getRes("fireImg_png");
-        this.fireConfig = RES.getRes("fireConfig_json");
-        this.fireSystem = new particle.GravityParticleSystem(this.fireImg, this.fireConfig);
-        this.fireSystem.x = 150;
-        this.fireSystem.y = 400;
-        this.addChild(this.fireSystem);
+        /*取消粒子
+                this.glowfront_3Img = RES.getRes("glowfront_3_png");
+                this.glowfront_3Config = RES.getRes("glowfront_3_json");
+                this.glowfront_3System = new particle.GravityParticleSystem(this.glowfront_3Img, this.glowfront_3Config);
+                this.glowfront_3System.x = 100;
+                this.glowfront_3System.y = 100;
+                this.addChild(this.glowfront_3System);
+        
+                this.glowfront_2Img = RES.getRes("glowfront_2_png");
+                this.glowfront_2Config = RES.getRes("glowfront_2_json");
+                this.glowfront_2System = new particle.GravityParticleSystem(this.glowfront_2Img, this.glowfront_2Config);
+                this.glowfront_2System.x = 100;
+                this.glowfront_2System.y = 100;
+                this.addChild(this.glowfront_2System);
+        
+                this.glowfront_1Img = RES.getRes("glowfront_1_png");
+                this.glowfront_1Config = RES.getRes("glowfront_1_json");
+                this.glowfront_1System = new particle.GravityParticleSystem(this.glowfront_1Img, this.glowfront_1Config);
+                this.glowfront_1System.x = 100;
+                this.glowfront_1System.y = 100;
+                this.addChild(this.glowfront_1System);
+                
+                this.starImg = RES.getRes("star_png");
+                this.starConfig = RES.getRes("star_json");
+                this.starSystem = new particle.GravityParticleSystem(this.starImg, this.starConfig);
+                var starX = window.screen.width - this.starSystem.width >> 1;
+                
+                //this.starSystem.y = 100;
+                this.addChild(this.starSystem);
+                
+        取消粒子*/
     };
     ;
     p.ShareButton = function () {
@@ -139,4 +156,3 @@ var GameScene = (function (_super) {
     return GameScene;
 }(eui.UILayer));
 egret.registerClass(GameScene,'GameScene');
-//# sourceMappingURL=GameScene.js.map

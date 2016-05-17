@@ -1440,19 +1440,19 @@ var egret;
             if (value < 0) {
                 return false;
             }
-            if (false) {
-                var values = this.$DisplayObject;
-                var originalBounds = this.$getOriginalBounds();
-                var bounds = this.$getTransformedBounds(this.$parent, egret.$TempRectangle);
-                var angle = values[4 /* rotation */] / 180 * Math.PI;
-                var baseWidth = originalBounds.$getBaseWidth(angle);
-                if (!baseWidth) {
-                    return false;
-                }
-                var baseHeight = originalBounds.$getBaseHeight(angle);
-                values[1 /* scaleY */] = bounds.height / baseHeight;
-                values[0 /* scaleX */] = value / baseWidth;
-            }
+            // if (false) {
+            //     var values = this.$DisplayObject;
+            //     var originalBounds = this.$getOriginalBounds();
+            //     var bounds = this.$getTransformedBounds(this.$parent, $TempRectangle);
+            //     var angle = values[Keys.rotation] / 180 * Math.PI;
+            //     var baseWidth = originalBounds.$getBaseWidth(angle);
+            //     if (!baseWidth) {
+            //         return false;
+            //     }
+            //     var baseHeight = originalBounds.$getBaseHeight(angle);
+            //     values[Keys.scaleY] = bounds.height / baseHeight;
+            //     values[Keys.scaleX] = value / baseWidth;
+            // }
             this.invalidateMatrix();
             return true;
         };
@@ -1503,19 +1503,19 @@ var egret;
             if (value < 0) {
                 return false;
             }
-            if (false) {
-                var values = this.$DisplayObject;
-                var originalBounds = this.$getOriginalBounds();
-                var bounds = this.$getTransformedBounds(this.$parent, egret.$TempRectangle);
-                var angle = values[4 /* rotation */] / 180 * Math.PI;
-                var baseHeight = originalBounds.$getBaseHeight(angle);
-                if (!baseHeight) {
-                    return false;
-                }
-                var baseWidth = originalBounds.$getBaseWidth(angle);
-                values[1 /* scaleY */] = value / baseHeight;
-                values[0 /* scaleX */] = bounds.width / baseWidth;
-            }
+            // if (false) {
+            //     var values = this.$DisplayObject;
+            //     var originalBounds = this.$getOriginalBounds();
+            //     var bounds = this.$getTransformedBounds(this.$parent, $TempRectangle);
+            //     var angle = values[Keys.rotation] / 180 * Math.PI;
+            //     var baseHeight = originalBounds.$getBaseHeight(angle);
+            //     if (!baseHeight) {
+            //         return false;
+            //     }
+            //     var baseWidth = originalBounds.$getBaseWidth(angle);
+            //     values[Keys.scaleY] = value / baseHeight;
+            //     values[Keys.scaleX] = bounds.width / baseWidth;
+            // }
             this.invalidateMatrix();
             return true;
         };
@@ -1992,15 +1992,24 @@ var egret;
                             value.$maskedObject.mask = null;
                         }
                         value.$maskedObject = this;
+                        value.$invalidateTransform();
                         this.$mask = value;
                         this.$maskRect = null;
                     }
                     else {
                         this.$setMaskRect(value);
+                        if (this.$mask) {
+                            this.$mask.$maskedObject = null;
+                            this.$mask.$invalidateTransform();
+                        }
                         this.$mask = null;
                     }
                 }
                 else {
+                    if (this.$mask) {
+                        this.$mask.$maskedObject = null;
+                        this.$mask.$invalidateTransform();
+                    }
                     this.$mask = null;
                     this.$maskRect = null;
                 }
@@ -11469,6 +11478,7 @@ var egret;
     locale_strings[3011] = "Index:\"{0}\" is out of the visual element index range";
     locale_strings[3012] = "This method is not available in Scroller component!";
     locale_strings[3013] = "UIStage is GUI root container, and only one such instant is in the display list！";
+    locale_strings[3014] = "Webkit fullscreen error";
     //socket 3100-3199
     locale_strings[3100] = "Current browser does not support WebSocket";
     locale_strings[3101] = "Please connect Socket firstly";
@@ -11608,6 +11618,7 @@ var egret;
     locale_strings[3011] = "索引:\"{0}\"超出可视元素索引范围";
     locale_strings[3012] = "此方法在Scroller组件内不可用!";
     locale_strings[3013] = "UIStage是GUI根容器，只能有一个此实例在显示列表中！";
+    locale_strings[3014] = "设置全屏模式失败";
     //socket 3100-3199
     locale_strings[3100] = "当前浏览器不支持WebSocket";
     locale_strings[3101] = "请先连接WebSocket";
@@ -12695,6 +12706,12 @@ var egret;
                 //在chrome里，小等于256*256的canvas会不启用GPU加速。
                 var width = Math.max(257, bounds.width);
                 var height = Math.max(257, bounds.height);
+                if (this.offsetX == oldOffsetX &&
+                    this.offsetY == oldOffsetY &&
+                    buffer.surface.width == width &&
+                    buffer.surface.height == height) {
+                    return;
+                }
                 if (!this.sizeChanged) {
                     this.sizeChanged = true;
                     buffer.resize(width, height);
@@ -15473,6 +15490,7 @@ var egret;
     var CanvasRenderer = (function () {
         function CanvasRenderer() {
             this.nestLevel = 0; //渲染的嵌套层次，0表示在调用堆栈的最外层。
+            this.renderingMask = false;
         }
         var d = __define,c=CanvasRenderer,p=c.prototype;
         /**
@@ -15674,10 +15692,11 @@ var egret;
             if (!mask && (!displayObject.$children || displayObject.$children.length == 0)) {
                 if (scrollRect) {
                     var m = displayMatrix;
-                    displayContext.setTransform(m.a, m.b, m.c, m.d, m.tx - region.minX, m.ty - region.minY);
-                    displayContext.beginPath();
-                    displayContext.rect(scrollRect.x, scrollRect.y, scrollRect.width, scrollRect.height);
-                    displayContext.clip();
+                    context.save();
+                    context.setTransform(m.a, m.b, m.c, m.d, m.tx - region.minX, m.ty - region.minY);
+                    context.beginPath();
+                    context.rect(scrollRect.x, scrollRect.y, scrollRect.width, scrollRect.height);
+                    context.clip();
                 }
                 if (hasBlendMode) {
                     context.globalCompositeOperation = compositeOp;
@@ -15686,7 +15705,25 @@ var egret;
                 if (hasBlendMode) {
                     context.globalCompositeOperation = defaultCompositeOp;
                 }
+                if (scrollRect) {
+                    context.restore();
+                }
                 return drawCalls;
+            }
+            var node;
+            //遮罩是单纯的填充图形,且alpha为1,性能优化
+            if (mask && (node = mask.$getRenderNode()) && (!mask.$children || mask.$children.length == 0) &&
+                node && node.type == 3 /* GraphicsNode */ &&
+                node.drawData.length == 1 &&
+                node.drawData[0].type == 1 /* Fill */ &&
+                node.drawData[0].fillAlpha == 1) {
+                this.renderingMask = true;
+                context.save();
+                var calls = this.drawDisplayObject(mask, context, dirtyList, matrix, mask.$displayList, clipRegion, root);
+                this.renderingMask = false;
+                calls += this.drawDisplayObject(displayObject, context, dirtyList, matrix, displayObject.$displayList, clipRegion, root);
+                context.restore();
+                return calls;
             }
             //绘制显示对象自身，若有scrollRect，应用clip
             var displayBuffer = this.createRenderBuffer(region.width, region.height);
@@ -15924,7 +15961,12 @@ var egret;
                         var fillPath = path;
                         context.fillStyle = forHitTest ? BLACK_COLOR : getRGBAString(fillPath.fillColor, fillPath.fillAlpha);
                         this.renderPath(path, context);
-                        context.fill();
+                        if (this.renderingMask) {
+                            context.clip();
+                        }
+                        else {
+                            context.fill();
+                        }
                         break;
                     case 2 /* GradientFill */:
                         var g = path;
@@ -16968,6 +17010,8 @@ var egret;
                     }
                     var bitmapWidth = texture._bitmapWidth;
                     var bitmapHeight = texture._bitmapHeight;
+                    node.imageWidth = texture._sourceWidth;
+                    node.imageHeight = texture._sourceHeight;
                     node.drawImage(texture._bitmapX, texture._bitmapY, bitmapWidth, bitmapHeight, xPos + texture._offsetX, yPos + texture._offsetY, texture.$getScaleBitmapWidth(), texture.$getScaleBitmapHeight());
                     xPos += texture.$getTextureWidth() + values[4 /* letterSpacing */];
                 }
@@ -17751,6 +17795,9 @@ var egret;
         //点中文本
         p.onMouseDownHandler = function (event) {
             event.stopPropagation();
+            this.$onFocus();
+        };
+        p.$onFocus = function () {
             var self = this;
             if (!this._text.visible) {
                 return;
@@ -19091,13 +19138,21 @@ var egret;
             }
         };
         /**
-         * @private
-         * @version Egret 2.4
+         * @language en_US
+         * Enter the text automatically entered into the input state, the input type is text only and may only be invoked in the user interaction.
+         * @version Egret 3.0.8
+         * @platform Web,Native
+         */
+        /**
+         * @language zh_CN
+         * 输入文本自动进入到输入状态，仅在类型是输入文本并且是在用户交互下才可以调用。
+         * @version Egret 3.0.8
          * @platform Web,Native
          */
         p.setFocus = function () {
-            //todo:
-            egret.$warn(1013);
+            if (this.type == egret.TextFieldType.INPUT && this.$stage) {
+                this.inputUtils.$onFocus();
+            }
         };
         /**
          * @private

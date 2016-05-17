@@ -6,7 +6,7 @@
          "type": "chrome",
          "request": "launch",
          "file": "index.html",
-         "runtimeExecutable": "${execPath}",
+         "runtimeExecutable": "C:\\Users\\Leemo\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe",
          "useBuildInServer": true,
          "sourceMaps": true,
          "webRoot": "${workspaceRoot}",

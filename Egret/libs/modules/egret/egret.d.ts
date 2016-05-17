@@ -8013,6 +8013,21 @@ declare module egret {
          * @readOnly
          */
         paused: boolean;
+        /**
+         * @language en_US
+         * Length of the current video (in seconds).
+         * @version Egret 3.0.8
+         * @platform Web,Native
+         * @readOnly
+         */
+        /**
+         * @language zh_CN
+         * 当前视频的长度（以秒为单位）。
+         * @version Egret 3.0.8
+         * @platform Web,Native
+         * @readOnly
+         */
+        length: number;
     }
     /**
      * @copy egret.Video
@@ -10226,6 +10241,7 @@ declare module egret {
          * 绘制一个显示对象
          */
         private drawDisplayObject(displayObject, context, dirtyList, matrix, displayList, clipRegion, root);
+        private renderingMask;
         /**
          * @private
          */
@@ -11724,6 +11740,7 @@ declare module egret {
         private blurHandler(event);
         private tempStage;
         private onMouseDownHandler(event);
+        $onFocus(): void;
         private onStageDownHandler(event);
         /**
          * @private
@@ -12562,8 +12579,15 @@ declare module egret {
          */
         private fillBackground(lines);
         /**
-         * @private
-         * @version Egret 2.4
+         * @language en_US
+         * Enter the text automatically entered into the input state, the input type is text only and may only be invoked in the user interaction.
+         * @version Egret 3.0.8
+         * @platform Web,Native
+         */
+        /**
+         * @language zh_CN
+         * 输入文本自动进入到输入状态，仅在类型是输入文本并且是在用户交互下才可以调用。
+         * @version Egret 3.0.8
          * @platform Web,Native
          */
         setFocus(): void;
