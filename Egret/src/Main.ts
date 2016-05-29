@@ -125,13 +125,19 @@ class Main extends eui.UILayer {
     private touchStart:number;
     private touchTime: number;
     private workTimer:egret.Timer = new egret.Timer(3000,1);
+   
     private touchBegin(e:egret.TouchEvent){
+        this.gameScene.bgimg.source = RES.getRes("bg_jpg");
         this.touchStart = egret.getTimer();
         this.gameScene.people.source = "resource/assets/normal.png";
+        this.gameScene.touchBtn.source = RES.getRes("buttonpre_png");
         this.gameScene.resultText.text ="Tip:长按上面的“火”按钮开始烧烤，松开即结束烧烤，注意观察并确定烧烤时间哦。";
         console.log("触摸开始"+this.touchStart);
         this.gameScene.goodFood.alpha = 0;
         this.gameScene.badFood.alpha = 0;
+        this.gameScene.blackline.visible = false;
+        this.gameScene.blacklogo.alpha = 0;
+        this.gameScene.tryAgainImg.visible = false;
 
         //this.gameScene.glowfront_3System.stop();
         // this.gameScene.glowfront_2System.stop();
@@ -160,10 +166,10 @@ class Main extends eui.UILayer {
         this.touchTime = egret.getTimer() - this.touchStart;
         egret.Tween.pauseTweens(this.gameScene.goodFood);
         egret.Tween.pauseTweens(this.gameScene.badFood);
-        // this.timeTextConfig();
-        // this.timeText.text = (this.touchTime / 1000).toFixed(2) + "秒";
-        //  this.addChild(this.timeText);
         this.gameScene.fireSystem.stop();
+        this.gameScene.tryAgainImg.visible = true;
+        this.gameScene.touchBtn.source = RES.getRes("button_png");
+        this.gameScene.ShareButton();
         //console.log("触摸结束,触摸时间为"+this.touchTime);
         this.gameManager();
         this.workTimer.reset();
@@ -176,45 +182,31 @@ class Main extends eui.UILayer {
         this.workTimer.addEventListener(egret.TimerEvent.TIMER,this.touchOver,this);
         this.workTimer.start();
     }
+    
+
     private gameManager(){
         switch(true)
         {
-            case this.touchTime < 1000:
-                console.log("触摸结束,触摸时间为" + this.touchTime);
-                //this.gameScene.resultText.text = "窗口大小为"+this.gameScene.height;
-                //this.gameScene.resultText.text = "同学，你在逗我吧..";
-               this.gameScene.resultText.textFlow = <Array<egret.ITextElement>>[
-                   {text:"同学，还能不能好好游戏了，才进行了"},
-                   { text: (this.touchTime / 1000).toFixed(2) + "秒",style: { "textColor": 0xFF5722,"bold": true,"size": 35}},
-                   {text:",哼！伤心的是，全国还有"},
-                   { text: (this.touchTime / 5000 * 100).toFixed(2) + "%",style: { "textColor": 0xFF5722,"bold": true,"size": 35 }},
-                   {text:"的玩家做过这样的恶作剧..."}
-               ];
-                //this.gameScene.resultText.text = "同学，还能不能好好游戏了！才进行了" + this.timeText + "，不过别灰心，全国有" + (this.touchTime / 5000 * 100).toFixed(2) + "%的玩家和你保持了同一水平";
+            
+            case this.touchTime < 1000 :
+                console.log("触摸结束，触摸时间为" + this.touchTime);
+                // textField.text = "哎呀,你太心急了，你得到了一个夹生的蛋糕！"
+                //this.gameScene.resultText.text = "哇哦，经过了" + (this.touchTime / 1000).toFixed(2) + "秒，打败了全国" + (this.touchTime / 5000 * 100) + "%"               
+                this.gameScene.resultText.textFlow = <Array<egret.ITextElement>>[
+                    { text: "同学，你在逗我吧！才开始" },
+                    { text: (this.touchTime / 1000).toFixed(2) + "秒",style: { "textColor": 0xFF5722,"bold": true,"size": 35 } },
+                    { text: "，伤心的是，全国还有" },
+                    { text: (this.touchTime / 5000 * 100).toFixed(2) + "%",style: { "textColor": 0xFF5722,"bold": true,"size": 35 } },
+                    { text: "的玩家和你一样欺负我。" }
+                    
+                ]; 
                 this.gameScene.people.source = RES.getRes("fail_png");
-                //this.gameScene.people.source = "resource/assets/fail.png";
-                this.gameScene.ShareButton();
                 
-                /*粒子定时器
-                var particleTimer: egret.Timer = new egret.Timer(800,1);
-                particleTimer.addEventListener(egret.TimerEvent.TIMER,this.timerComplete,this);
-                particleTimer.start();
-                this.gameScene.starSystem.start();
-                */
-                //this.gameScene.glowbackSystem.start();
-               // this.gameScene.glowfront_3System.start();
-               // this.gameScene.glowfront_2System.start();
-               // this.gameScene.glowfront_1System.start();
-                
-                
-                
-                //this.particleTimer.addEventListener(egret.TimerEvent.TIMER_COMPLETE,this.timerComplete,this);
-
-                
-                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
+                this.gameScene.bgimg.source = RES.getRes("bg_jpg");
+                //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                 // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
-            
+                
             
             case this.touchTime >= 1000 && this.touchTime < 2000:
                 console.log("触摸结束，触摸时间为" + this.touchTime);
@@ -228,10 +220,11 @@ class Main extends eui.UILayer {
                     { text: "的玩家停留在刚点着火的水平。" }
                 ];
                 
+                //this.gameScene.bgimg.source = RES.getRes("bg_jpg");
                 //this.gameScene.resultText.text = "哎呀,你太心急了，火才刚升起来！";
                 this.gameScene.people.source = RES.getRes("fail_png");
                 //this.gameScene.people.source = "resource/assets/fail.png";
-                this.gameScene.ShareButton();
+                //this.gameScene.ShareButton();
                 //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                 // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -246,9 +239,10 @@ class Main extends eui.UILayer {
                     { text: (this.touchTime / 5000 * 100).toFixed(2) + "%",style: { "textColor": 0xFF5722,"bold": true,"size": 35 } },
                     { text: "的玩家和你保持了同一水平。" }
                 ];
+                //this.gameScene.bgimg.source = RES.getRes("bg_jpg");
                 this.gameScene.people.source = RES.getRes("fail_png");
                 //this.gameScene.people.source = "resource/assets/fail.png";
-                this.gameScene.ShareButton();
+                //this.gameScene.ShareButton();
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -265,9 +259,10 @@ class Main extends eui.UILayer {
                     { text: (this.touchTime / 5000 * 100).toFixed(2) + "%",style: { "textColor": 0xFF5722,"bold": true,"size": 35 } },
                     { text: "的玩家在考虑让谁吃下这块夹生的烤羊排！" }
                 ];
+                //this.gameScene.bgimg.source = RES.getRes("bg_jpg");
                 this.gameScene.people.source = RES.getRes("fail_png");
                 //this.gameScene.people.source = "resource/assets/fail.png";
-                this.gameScene.ShareButton();
+               // this.gameScene.ShareButton();
              //   this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
               //  this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -277,7 +272,7 @@ class Main extends eui.UILayer {
              //   this.gameScene.resultText.text = "经过不懈的努力，你获得了六分熟的羊腿，打败了全国53%的面包师";
              //   this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
               //  this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
-                break;
+                //break;
 
             case this.touchTime >= 4100 && this.touchTime < 4600:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
@@ -293,10 +288,10 @@ class Main extends eui.UILayer {
                     { text: (this.touchTime / 5000 * 100).toFixed(2) + "%",style: { "textColor": 0xFF5722,"bold": true,"size": 35 } },
                     { text: "的玩家，继续努力吧！" }
                 ];
-                   
+                this.gameScene.bgimg.source = RES.getRes("bgsuccess_jpg");  
                 this.gameScene.people.source = RES.getRes("success_png");
                 //this.gameScene.people.source = "resource/assets/success.png";
-                this.gameScene.ShareButton();
+               // this.gameScene.ShareButton();
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -313,9 +308,10 @@ class Main extends eui.UILayer {
                     { text: (this.touchTime / 5000 * 100).toFixed(2) + "%",style: { "textColor": 0xFF5722,"bold": true,"size": 35 } },
                     { text: "的玩家。进步很快呀！" }
                 ];
+                this.gameScene.bgimg.source = RES.getRes("bgsuccess_jpg");  
                 this.gameScene.people.source = RES.getRes("success_png");
                 //this.gameScene.people.source = "resource/assets/success.png";
-                this.gameScene.ShareButton();
+                //this.gameScene.ShareButton();
               //  this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -332,26 +328,31 @@ class Main extends eui.UILayer {
                     { text: (this.touchTime / 5000 * 100).toFixed(2) + "%",style: { "textColor": 0xFF5722,"bold": true,"size": 35 } },
                     { text: "的玩家。离完美只差一步，继续挑战吧！" }
                 ];
+                this.gameScene.bgimg.source = RES.getRes("bgsuccess_jpg");  
                 this.gameScene.people.source = RES.getRes("success_png");
                 //this.gameScene.people.source = "resource/assets/success.png";
-                this.gameScene.ShareButton();
+                //this.gameScene.ShareButton();
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
-
-            case this.touchTime >= 4980 && this.touchTime < 5000:
+            //case this.touchTime < 1000:
+            case this.touchTime >=4980 && this.touchTime < 5000:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
                 //this.gameScene.resultText.text = "吃货之神！一番努力后，你获得了色香味俱全的完美黄金烤羊排，打败了全国99%的厨师！赶紧开个烧烤店走向人生巅峰吧";
                 this.gameScene.resultText.textFlow = <Array<egret.ITextElement>>[
-                    { text: "天呐，吃货之神！你烤出了失传已久的" },
+                    { text: "天呐，吃货之神！你烤出了" },
                     { text: "黄金级完美烤羊排",style: { "textColor": 0xFF5722,"bold": true,"size": 30 } },
                     { text: "，凌驾于全国" },
                     { text: (this.touchTime / 5000 * 100).toFixed(2) + "%",style: { "textColor": 0xFF5722,"bold": true,"size": 35 } },
-                    { text: "的玩家！无论你在做什么，开个烧烤店绝对是你的最佳选择！" }
+                    { text: "的玩家！无论你在做什么，开个烧烤店绝对是你的最佳选择!" }
                 ];
+               // this.gameScene.logo.visible = false;
+                this.gameScene.BlackLogo();
+                this.gameScene.bgimg.source = RES.getRes("bgprefect_jpg");  
                 this.gameScene.people.source = RES.getRes("prefect_png");
                 //this.gameScene.people.source = "resource/assets/prefect.png";
-                this.gameScene.ShareButton();
+               // this.gameScene.ShareButton();
+               // egret.Tween.get(this.gameScene.logo).to({ alpha: 1 },500,egret.Ease.circIn);
                // this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -368,10 +369,11 @@ class Main extends eui.UILayer {
                     { text: ((this.touchTime - 4000)/ 5000 * 100).toFixed(2) + "%",style: { "textColor": 0xFF5722,"bold": true,"size": 35 } },
                     { text: "的玩家和你犯了同样的错误！" }
                 ];
-
+                //this.gameScene.bgimg.source = RES.getRes("bg_jpg");
                 this.gameScene.people.source = RES.getRes("bad_png");
+                this.gameScene.blackline.visible = true;
                 //this.gameScene.people.source = "resource/assets/bad.png";
-                this.gameScene.ShareButton();
+                //this.gameScene.ShareButton();
                 //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                 //this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break;
@@ -389,23 +391,26 @@ class Main extends eui.UILayer {
                     { text: "的玩家和你犯了同样的错误！" }
                 ];
                 this.gameScene.people.source = RES.getRes("bad_png");
+                this.gameScene.blackline.visible = true;
+               
                 //this.gameScene.people.source = "resource/assets/bad.png";
-                this.gameScene.ShareButton();
+                //this.gameScene.ShareButton();
                 break;
 
             case this.touchTime >= 6300 && this.touchTime < 7000:
                 console.log("触摸结束,触摸时间为" + this.touchTime);
                 //this.gameScene.resultText.text = "亲，你是木炭烤羊排还是羊排烤木炭，再折腾下，羊排就成炭了！";
                 this.gameScene.resultText.textFlow = <Array<egret.ITextElement>>[
-                    { text: "亲，我们这是烤羊排不是烧炭游戏哦，再折腾下羊排就成炭了" },
+                    { text: "亲，我们这烤的是羊排不是碳，再折腾下羊排就成炭了" },
                    
                     { text: "，不过你不是孤独的，全国有" },
                     { text: ((this.touchTime - 4000) / 5000 * 100).toFixed(2) + "%",style: { "textColor": 0xFF5722,"bold": true,"size": 35 } },
                     { text: "的玩家想把烤羊排变成烧炭！" }
                 ];
                 this.gameScene.people.source = RES.getRes("bad_png");
+                this.gameScene.blackline.visible = true;
                 //this.gameScene.people.source = "resource/assets/bad.png";
-                this.gameScene.ShareButton();
+                //this.gameScene.ShareButton();
                 //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
                 // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
                 break; 
@@ -421,11 +426,10 @@ class Main extends eui.UILayer {
                     { text: ((this.touchTime - 6000) / 5000 * 100).toFixed(2) + "%",style: { "textColor": 0xFF5722,"bold": true,"size": 35 } },
                     { text: "的玩家对烧炭游戏感兴趣！" }
                 ];
+                this.gameScene.blackline.visible = true;
                 this.gameScene.people.source = RES.getRes("bad_png");
                 //this.gameScene.people.source = "resource/assets/bad.png";
-                this.gameScene.ShareButton();
-                //this.overText.x = this.stage.stageWidth - this.overText.width >> 1;
-                // this.overText.y = this.stage.stageHeight - this.stage.stageHeight / 5;
+                //this.gameScene.ShareButton();
                 break; 
              
     }

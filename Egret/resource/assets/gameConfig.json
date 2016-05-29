@@ -19,9 +19,9 @@
 	},
 	
 	"_logo":{
-		"top":5,
+		"top":10,
 		"bottom":0,
-		"left":5,
+		"left":10,
 		"right":0,
 		"horcenter":0,
 		"vercenter":0
@@ -31,7 +31,7 @@
 		"top":5,
 		"bottom":0,
 		"left":0,
-		"right":0,
+		"right":10,
 		"horcenter":0,
 		"vercenter":0
 	},
@@ -84,7 +84,15 @@
 		"right":0,
 		"horcenter":0,
 		"vercenter":0
+	},
+	
+	"_again":{
+		"top":0,
+		"bottom":200,
+		"left":0,
+		"right":0,
+		"horcenter":-180,
+		"vercenter":0
 	}
-
-
+	
 }

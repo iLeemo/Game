@@ -1,6 +1,6 @@
 {
 	"groups":[{
-			"keys":"bad_png,badfood_png,button_png,fail_png,food_png,goodfood_png,logo_png,normal_png,prefect_png,share_png,slogan_png,success_png,items_png,bg_png,gameConfig_json,fireConfig_json,fireImg_png",
+			"keys":"bad_png,badfood_png,buttonpre_png,fail_png,food_png,goodfood_png,logo_png,normal_png,prefect_png,share_png,slogan_png,success_png,items_png,bg_jpg,gameConfig_json,fireConfig_json,fireImg_png,bgprefect_jpg,bgsuccess_jpg,blackline_png,button_png,again_png,blacklogo_png",
 			"name":"preload"
 		}],
 	"resources":[
@@ -15,7 +15,7 @@
 			"url":"assets/badfood.png"
 		},
 		{
-			"name":"button_png",
+			"name":"buttonpre_png",
 			"type":"image",
 			"url":"assets/button.png"
 		},
@@ -70,54 +70,14 @@
 			"url":"assets/items.png"
 		},
 		{
-			"name":"bg_png",
+			"name":"bg_jpg",
 			"type":"image",
-			"url":"assets/bg.png"
-		},
-		{
-			"name":"glowback_json",
-			"type":"json",
-			"url":"assets/glowback.json"
-		},
-		{
-			"name":"glowback_png",
-			"type":"image",
-			"url":"assets/glowback.png"
+			"url":"assets/bg.jpg"
 		},
 		{
 			"name":"gameConfig_json",
 			"type":"json",
 			"url":"assets/gameConfig.json"
-		},
-		{
-			"name":"glowfront_1_json",
-			"type":"json",
-			"url":"assets/glowfront_1.json"
-		},
-		{
-			"name":"glowfront_1_png",
-			"type":"image",
-			"url":"assets/glowfront_1.png"
-		},
-		{
-			"name":"glowfront_2_json",
-			"type":"json",
-			"url":"assets/glowfront_2.json"
-		},
-		{
-			"name":"glowfront_2_png",
-			"type":"image",
-			"url":"assets/glowfront_2.png"
-		},
-		{
-			"name":"glowfront_3_json",
-			"type":"json",
-			"url":"assets/glowfront_3.json"
-		},
-		{
-			"name":"glowfront_3_png",
-			"type":"image",
-			"url":"assets/glowfront_3.png"
 		},
 		{
 			"name":"fireConfig_json",
@@ -130,14 +90,34 @@
 			"url":"assets/fireImg.png"
 		},
 		{
-			"name":"star_png",
+			"name":"bgprefect_jpg",
 			"type":"image",
-			"url":"assets/star.png"
+			"url":"assets/bgprefect.jpg"
 		},
 		{
-			"name":"star_json",
-			"type":"json",
-			"url":"assets/star.json"
+			"name":"bgsuccess_jpg",
+			"type":"image",
+			"url":"assets/bgsuccess.jpg"
+		},
+		{
+			"name":"blackline_png",
+			"type":"image",
+			"url":"assets/blackline.png"
+		},
+		{
+			"name":"button_png",
+			"type":"image",
+			"url":"assets/button-press.png"
+		},
+		{
+			"name":"again_png",
+			"type":"image",
+			"url":"assets/again.png"
+		},
+		{
+			"name":"blacklogo_png",
+			"type":"image",
+			"url":"assets/blacklogo.png"
 		}
 	]
 }

@@ -44,16 +44,25 @@ class GameScene extends eui.UILayer {
     public resultText: eui.Label = new eui.Label();
     //public resultText:egret.TextField = new egret.TextField();
     public touchBtn: eui.Image = new eui.Image();
+    public bgimg: eui.Image = new eui.Image();
+    public blackline: eui.Image = new eui.Image;
+    public tryAgainImg: eui.Image = new eui.Image();
+    public logo: eui.Image = new eui.Image();
     public gameScene() {
         //var bgImg:eui.Image = new eui.Image();
         //bgImg.source = "resource/assets/bg.jpg";
         //this.addChild(bgImg);
+        
+        
 
-        var bgimg: eui.Image = new eui.Image();
-        bgimg.source = RES.getRes("bg_png");
+        this.bgimg.source = RES.getRes("bg_jpg");
         this.position = RES.getRes("gameConfig_json");
-        bgimg.horizontalCenter = this.position._logo.horcenter;
-        this.addChild(bgimg);
+        this.bgimg.horizontalCenter = this.position._logo.horcenter;
+        this.addChild(this.bgimg);
+        
+        this.blackline.source = RES.getRes("blackline_png");
+        this.addChild(this.blackline);
+        this.blackline.visible = false;
 
 
         var items: eui.Image = new eui.Image();
@@ -66,6 +75,7 @@ class GameScene extends eui.UILayer {
         var title: eui.Image = new eui.Image();
         title.source = RES.getRes("slogan_png");
         title.bottom = items.bottom + this.position._title.bottom;
+        title.horizontalCenter =this.position._title.horcenter;
         this.addChild(title);
 
         //this.glowbackImg = RES.getRes("glowback_png");
@@ -76,6 +86,7 @@ class GameScene extends eui.UILayer {
         //this.addChild(this.glowbackSystem);
 
         this.people.source = RES.getRes("normal_png")
+        this.people.alpha = 1;
         //this.people.source = "resource/assets/normal.png";
         this.people.bottom = items.bottom + this.position._people.bottom;
         this.people.horizontalCenter = this.position._people.horcenter;
@@ -129,13 +140,18 @@ class GameScene extends eui.UILayer {
         this.addChild(this.touchBtn);
         
         //Logo
-        var logo: eui.Image = new eui.Image();
-        logo.source = RES.getRes("logo_png");
+
+        this.logo.source = RES.getRes("logo_png");
         //logo.source = "resource/assets/logo.png"
-        logo.top = this.position._logo.top;
-        logo.left = this.position._logo.left;
-        this.addChild(logo);
+        this.logo.top = this.position._logo.top;
+        this.logo.left = this.position._logo.left;
+        this.addChild(this.logo);
         
+        this.tryAgainImg.source = RES.getRes("again_png");
+        this.tryAgainImg.bottom = this.position._again.bottom;
+        this.tryAgainImg.horizontalCenter = this.position._again.horcenter;
+        this.addChild(this.tryAgainImg);
+        this.tryAgainImg.visible = false;
         //火焰粒子
         this.fireImg = RES.getRes("fireImg_png");
         this.fireConfig = RES.getRes("fireConfig_json");
@@ -191,7 +207,7 @@ class GameScene extends eui.UILayer {
     }
 
     //share按钮
-    public share: eui.Image = new eui.Image();;
+    public share: eui.Image = new eui.Image();
     public ShareButton() {
         this.share.source = RES.getRes("share_png");
         //this.share.source = "resource/assets/share.png"
@@ -203,7 +219,19 @@ class GameScene extends eui.UILayer {
         egret.Tween.get(this.share).to({ alpha: 1 }, 200, egret.Ease.circIn);
     }
 
-
-
+    //黑色LOGO
+    public blacklogo: eui.Image = new eui.Image();
+    public BlackLogo() {
+        this.blacklogo.source = RES.getRes("blacklogo_png");
+        //this.share.source = "resource/assets/share.png"
+        this.blacklogo.top = this.position._logo.top;
+        this.blacklogo.left = this.position._logo.left;
+        //this.blacklogo.name = "share";
+        this.blacklogo.alpha = 0;
+        this.addChild(this.blacklogo);
+        this.blacklogo.visible = true;
+        egret.Tween.get(this.blacklogo).to({ alpha: 1 },200,egret.Ease.circIn);
+    }
+    
 
 }
